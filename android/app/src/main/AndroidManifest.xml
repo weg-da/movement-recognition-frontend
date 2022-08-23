@@ -1,9 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.movement_recognition_frontend">
+   <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
    <application
         android:label="movement_recognition_frontend"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -23,6 +25,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+               
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

@@ -12,9 +12,8 @@ class AccLineChart extends StatelessWidget {
   const AccLineChart(this.seriesList, {this.animate});
 
   static double roundDouble(double value, int places) {
-    print(value);
     num mod = pow(10.0, places);
-    print((value * mod).round().toDouble() / mod);
+
     return ((value * mod).round().toDouble() / mod);
   }
 

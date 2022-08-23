@@ -8,6 +8,7 @@ class ModelData {
   List<double> gyrY;
   List<double> gyrZ;
   String? result;
+  int? number;
 
   ModelData(
       {required this.accX,
@@ -15,7 +16,8 @@ class ModelData {
       required this.accZ,
       required this.gyrX,
       required this.gyrY,
-      required this.gyrZ});
+      required this.gyrZ,
+      this.number});
 
 // convert list of doubles to list of string values
   String listToString(List<double> input) {
@@ -40,22 +42,22 @@ class ModelData {
 // create map with sensor axes
 // shorten length of axes to the same length
   Map createMap() {
-    List<int> lengths = [
+    List<int> lengthsAcc = [
       accX.length,
       accY.length,
       accZ.length,
-      gyrX.length,
-      gyrY.length,
-      gyrZ.length
     ];
-    int smallestLenght = lengths.reduce(min);
+    List<int> lengthsGyr = [gyrX.length, gyrY.length, gyrZ.length];
+    int smallestLenghtAcc = lengthsAcc.reduce(min);
+    int smallestLenghtGyr = lengthsGyr.reduce(min);
     Map data = {
-      "acc_x": listToString(accX.sublist(0, smallestLenght)),
-      "acc_y": listToString(accY.sublist(0, smallestLenght)),
-      "acc_z": listToString(accZ.sublist(0, smallestLenght)),
-      "gyr_x": listToString(gyrX.sublist(0, smallestLenght)),
-      "gyr_y": listToString(gyrY.sublist(0, smallestLenght)),
-      "gyr_z": listToString(gyrZ.sublist(0, smallestLenght))
+      "acc_x": listToString(accX.sublist(0, smallestLenghtAcc)),
+      "acc_y": listToString(accY.sublist(0, smallestLenghtAcc)),
+      "acc_z": listToString(accZ.sublist(0, smallestLenghtAcc)),
+      "gyr_x": listToString(gyrX.sublist(0, smallestLenghtGyr)),
+      "gyr_y": listToString(gyrY.sublist(0, smallestLenghtGyr)),
+      "gyr_z": listToString(gyrZ.sublist(0, smallestLenghtGyr)),
+      "label": number
     };
 
     return data;
@@ -69,6 +71,28 @@ class ModelData {
     gyrX = [];
     gyrY = [];
     gyrZ = [];
+  }
+
+  double _roundDouble(double value, int places) {
+    num mod = pow(10.0, places);
+
+    return ((value * mod).round().toDouble() / mod);
+  }
+
+  List<double> _pruneList(List<double> list) {
+    for (var i = 0; i < list.length; i++) {
+      list[i] = _roundDouble(list[i], 4);
+    }
+    return list;
+  }
+
+  void modelPrune() {
+    accX = _pruneList(accX);
+    accY = _pruneList(accY);
+    accZ = _pruneList(accZ);
+    gyrX = _pruneList(gyrX);
+    gyrY = _pruneList(gyrY);
+    gyrZ = _pruneList(gyrZ);
   }
 
   // factory ModelData.toJson(Map<String, dynamic> json) {
