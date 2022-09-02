@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart' as dio;
 import 'package:movement_recognition_frontend/model_data.dart';
+import 'package:movement_recognition_frontend/settings.dart';
 
 class HttpMovement {
   // http post request for sending data to backend svm model
@@ -13,8 +14,7 @@ class HttpMovement {
 
     dio.Response<String> res;
     try {
-      res =
-          await dios.post('http://192.168.178.192:8000/movement/', data: data);
+      res = await dios.post(HttpSettings.localUrl, data: data);
     } on dio.DioError catch (e) {
       return Future.error(e.message);
     }
@@ -37,9 +37,7 @@ class HttpMovement {
 
     dio.Response<String> res;
     try {
-      res = await dios.post(
-          'https://dl2v11mnrc.execute-api.eu-central-1.amazonaws.com/default/first',
-          data: data);
+      res = await dios.post(HttpSettings.awsUrl, data: data);
     } on dio.DioError catch (e) {
       return Future.error(e.message);
     }
