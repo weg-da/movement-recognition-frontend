@@ -1,5 +1,5 @@
-import 'package:movement_recognition_frontend/page_home.dart';
 import 'package:flutter/material.dart';
+import 'package:movement_recognition_frontend/pages/page_home.dart';
 
 void main() {
   runApp(const MyApp());
