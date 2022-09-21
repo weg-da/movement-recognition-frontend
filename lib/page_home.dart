@@ -128,9 +128,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   "Record Movement",
                   style: TextStyle(fontSize: 22),
                 )),
-            TextButton(
-                onPressed: startRandomStream,
-                child: const Text("Start Random Number Stream")),
+            // TextButton(
+            //     onPressed: startRandomStream,
+            //     child: const Text("Start Random Number Stream")),
             // TextButton(
             //     onPressed: () {
             //       if (modelData.accX.isNotEmpty) {

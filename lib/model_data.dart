@@ -94,19 +94,4 @@ class ModelData {
     gyrY = _pruneList(gyrY);
     gyrZ = _pruneList(gyrZ);
   }
-
-  // factory ModelData.toJson(Map<String, dynamic> json) {
-  //   return ModelData(
-  //     id: json['id'] as int,
-  //     dateFrom: DateTime.parse(json['date_from']).toLocal(),
-  //     dateTo: DateTime.parse(json['date_to']).toLocal(),
-  //     title: json['appointment_title'] as String,
-  //     comment: json['comment'] as String?,
-  //     created: DateTime.parse(json['created_at']).toLocal(),
-  //     host: json['host'] as int,
-  //     patient: json['patient'] as int,
-  //     reviewed: json['reviewed'] as bool,
-  //     status: json['status'],
-  //   );
-  // }
 }

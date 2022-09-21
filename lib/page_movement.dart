@@ -17,6 +17,7 @@ class PageMovement extends StatefulWidget {
 
 class _MovementScaffoldState extends State<PageMovement> {
   bool movementFinished = false;
+  bool uploading = false;
   late int _counter;
   late String _title;
   String _prediction = " ";
@@ -91,11 +92,15 @@ class _MovementScaffoldState extends State<PageMovement> {
   }
 
   void uploadData() async {
+    setState(() {
+      uploading = true;
+    });
     modelData.modelPrune();
     if (modelData.accX.isNotEmpty) {
       //await httpMovement.postSensorData(modelData: modelData);
       await httpMovement.postSensorDataAWS(modelData: modelData);
       setState(() {
+        uploading = false;
         _prediction = "Prediction: " + modelData.result.toString();
       });
     }
@@ -129,10 +134,12 @@ class _MovementScaffoldState extends State<PageMovement> {
                     '$_counter',
                     style: Theme.of(context).textTheme.headline4,
                   ),
-            Text(
-              _prediction,
-              style: Theme.of(context).textTheme.headline5,
-            ),
+            uploading
+                ? const CircularProgressIndicator()
+                : Text(
+                    _prediction,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
             // TextButton(
             //     onPressed: uploadData, child: const Text("Upload Movement"))
           ],
