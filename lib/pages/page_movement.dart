@@ -7,15 +7,25 @@ import 'package:movement_recognition_frontend/model_data.dart';
 import 'package:movement_recognition_frontend/sensor_chart.dart';
 
 class PageMovement extends StatefulWidget {
-  const PageMovement({Key? key, required this.movementNumber})
+  const PageMovement(
+      {Key? key, required this.movementNumber, required this.movementName})
       : super(key: key);
   final int movementNumber;
+  final String movementName;
 
   @override
   State<PageMovement> createState() => _MovementScaffoldState();
 }
 
 class _MovementScaffoldState extends State<PageMovement> {
+  List<String> movementNames = [
+    "Resting position, sitting",
+    "Outstreched arm, sitting",
+    "Finger to nose movement",
+    "Hand open, hand closed",
+    "Rotating arm",
+    "Finger tapping, thumb with index finger"
+  ];
   bool movementFinished = false;
   bool uploading = false;
   late int _counter;
@@ -98,11 +108,21 @@ class _MovementScaffoldState extends State<PageMovement> {
     modelData.modelPrune();
     if (modelData.accX.isNotEmpty) {
       //await httpMovement.postSensorData(modelData: modelData);
-      await httpMovement.postSensorDataAWS(modelData: modelData);
-      setState(() {
-        uploading = false;
-        _prediction = "Prediction: " + modelData.result.toString();
-      });
+      httpMovement
+          .postSensorDataAWS(modelData: modelData)
+          .then((value) => {
+                setState(() {
+                  uploading = false;
+                  _prediction = "Prediction: " +
+                      movementNames[int.parse(modelData.result!)];
+                })
+              })
+          .onError((error, stackTrace) => {
+                setState(() {
+                  uploading = false;
+                  _prediction = "Prediction: " + "Error loading";
+                })
+              });
     }
   }
 
@@ -117,12 +137,35 @@ class _MovementScaffoldState extends State<PageMovement> {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(
-              "Movement: " + widget.movementNumber.toString(),
-              style: Theme.of(context).textTheme.headline5,
+            const SizedBox(
+              height: 100,
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Movement: ",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    widget.movementName,
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 100,
+            ),
+            uploading
+                ? const CircularProgressIndicator()
+                : Text(
+                    _prediction,
+                    style: const TextStyle(fontSize: 20),
+                  ),
             Text(
               _title,
               style: Theme.of(context).textTheme.headline4,
@@ -134,12 +177,7 @@ class _MovementScaffoldState extends State<PageMovement> {
                     '$_counter',
                     style: Theme.of(context).textTheme.headline4,
                   ),
-            uploading
-                ? const CircularProgressIndicator()
-                : Text(
-                    _prediction,
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
+
             // TextButton(
             //     onPressed: uploadData, child: const Text("Upload Movement"))
           ],

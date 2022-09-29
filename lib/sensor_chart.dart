@@ -9,7 +9,8 @@ class AccLineChart extends StatelessWidget {
   final List<charts.Series<dynamic, int>> seriesList;
   final bool? animate;
 
-  const AccLineChart(this.seriesList, {this.animate});
+  const AccLineChart(this.seriesList, {Key? key, this.animate})
+      : super(key: key);
 
   static double roundDouble(double value, int places) {
     num mod = pow(10.0, places);

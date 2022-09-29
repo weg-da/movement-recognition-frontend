@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:movement_recognition_frontend/model_data.dart';
 import 'package:movement_recognition_frontend/pages/page_movement.dart';
@@ -15,28 +14,36 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int? movementNumber;
-  ModelData modelData =
-      ModelData(accX: [], accY: [], accZ: [], gyrX: [], gyrY: [], gyrZ: []);
+  List<String> movementNames = [
+    "Resting position, sitting",
+    "Outstreched arm, sitting",
+    "Finger to nose movement",
+    "Hand open, hand closed",
+    "Rotating arm",
+    "Finger tapping, thumb with index finger"
+  ];
+  // ModelData modelData =
+  //     ModelData(accX: [], accY: [], accZ: [], gyrX: [], gyrY: [], gyrZ: []);
 
-  Stream<double> countStream(int max) async* {
-    var rng = Random();
-    Timer(const Duration(seconds: 5), () async* {
-      yield rng.nextDouble();
-    });
-    // for (int i = 0; i < max; i++) {
-    //   yield rng.nextDouble();
-    // }
-  }
+  // Stream<double> countStream(int max) async* {
+  //   var rng = Random();
+  //   Timer(const Duration(seconds: 5), () async* {
+  //     yield rng.nextDouble();
+  //   });
+  //   // for (int i = 0; i < max; i++) {
+  //   //   yield rng.nextDouble();
+  //   // }
+  // }
 
-  Future startRandomStream() async {
-    var streama = countStream(5).listen((event) {
-      // print(event);
-    });
-    Timer(const Duration(seconds: 5), () {
-      // print("Stop");
-      streama.cancel();
-    });
-  }
+  // Future startRandomStream() async {
+  //   var streama = countStream(5).listen((event) {
+  //     // print(event);
+  //   });
+  //   Timer(const Duration(seconds: 5), () {
+  //     // print("Stop");
+  //     streama.cancel();
+  //   });
+  // }
 
   Future startMovement(bool sim) async {
     await showDialog(
@@ -44,11 +51,12 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (BuildContext context) {
           movementNumber = null;
           return AlertDialog(
+              // backgroundColor: Colors.lightBlueAccent,
               scrollable: true,
-              title: const Text("Select the number of the movement"),
+              title: const Text("Select movement"),
               content: SizedBox(
-                height: 200,
-                width: 200,
+                height: 400,
+                width: 300,
                 child: Row(children: [
                   Expanded(
                     child: Column(
@@ -57,36 +65,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         ListView.builder(
                           shrinkWrap: true,
-                          itemCount: 3,
+                          itemCount: 6,
                           itemBuilder: (context, index) {
                             return Card(
                               child: ListTile(
-                                title: Text(index.toString()),
+                                tileColor: Colors.blue,
+                                textColor: Colors.white,
+                                leading: Text((index + 1).toString()),
+                                title: Text(movementNames[index]),
                                 onTap: () {
                                   movementNumber = (index);
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: 3,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              child: ListTile(
-                                title: Text((index + 3).toString()),
-                                onTap: () {
-                                  movementNumber = (index + 3);
                                   Navigator.of(context).pop();
                                 },
                               ),
@@ -101,12 +89,12 @@ class _MyHomePageState extends State<MyHomePage> {
         });
     if (sim != true) {
       if (movementNumber != null) {
-        modelData.clean(); // clean model data
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => PageMovement(
                       movementNumber: movementNumber!,
+                      movementName: movementNames[movementNumber!],
                     )));
       }
     }
