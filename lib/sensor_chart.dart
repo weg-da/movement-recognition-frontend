@@ -18,7 +18,7 @@ class AccLineChart extends StatelessWidget {
     return ((value * mod).round().toDouble() / mod);
   }
 
-  factory AccLineChart.acceloration(ModelData modelData) {
+  factory AccLineChart.acceloration(SensorData modelData) {
     return AccLineChart(
       createAccelaration(modelData),
       // Disable animations for image tests.
@@ -55,7 +55,7 @@ class AccLineChart extends StatelessWidget {
   /// Create one series with sample hard coded data.
 
   static List<charts.Series<Acceleration, int>> createAccelaration(
-      ModelData modelData) {
+      SensorData modelData) {
     final List<Acceleration> dataX = [];
     final List<Acceleration> dataY = [];
     final List<Acceleration> dataZ = [];

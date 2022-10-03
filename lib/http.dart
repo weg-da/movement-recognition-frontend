@@ -4,7 +4,7 @@ import 'package:movement_recognition_frontend/settings.dart';
 
 class HttpMovement {
   // http post request for sending data to backend svm model
-  Future postSensorData({required ModelData modelData}) async {
+  Future postSensorData({required SensorData modelData}) async {
     Map data = modelData.createMap();
 
     var dios = dio.Dio();
@@ -27,7 +27,7 @@ class HttpMovement {
     }
   }
 
-  Future postSensorDataAWS({required ModelData modelData}) async {
+  Future postSensorDataAWS({required SensorData modelData}) async {
     Map data = modelData.createMap();
 
     var dios = dio.Dio();

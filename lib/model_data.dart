@@ -1,6 +1,6 @@
 import 'dart:math';
 
-class ModelData {
+class SensorData {
   List<double> accX;
   List<double> accY;
   List<double> accZ;
@@ -10,7 +10,7 @@ class ModelData {
   String? result;
   int? number;
 
-  ModelData(
+  SensorData(
       {required this.accX,
       required this.accY,
       required this.accZ,

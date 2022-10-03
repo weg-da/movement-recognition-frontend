@@ -34,8 +34,8 @@ class _MovementScaffoldState extends State<PageMovement> {
   HttpMovement httpMovement = HttpMovement();
   late StreamSubscription accStream;
   late StreamSubscription gyrStream;
-  ModelData modelData =
-      ModelData(accX: [], accY: [], accZ: [], gyrX: [], gyrY: [], gyrZ: []);
+  SensorData modelData =
+      SensorData(accX: [], accY: [], accZ: [], gyrX: [], gyrY: [], gyrZ: []);
 
   Future countdown({required int seconds}) async {
     int counterLocal = seconds;

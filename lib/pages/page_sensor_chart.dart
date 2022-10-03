@@ -5,7 +5,7 @@ import 'package:movement_recognition_frontend/sensor_chart.dart';
 class SensorChartScaffold extends StatefulWidget {
   const SensorChartScaffold({Key? key, required this.modelData})
       : super(key: key);
-  final ModelData modelData;
+  final SensorData modelData;
 
   @override
   State<SensorChartScaffold> createState() => _AccScaffoldState();
