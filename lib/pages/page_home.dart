@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:movement_recognition_frontend/model_data.dart';
 import 'package:movement_recognition_frontend/pages/page_movement.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -22,28 +21,6 @@ class _MyHomePageState extends State<MyHomePage> {
     "Rotating arm",
     "Finger tapping, thumb with index finger"
   ];
-  // ModelData modelData =
-  //     ModelData(accX: [], accY: [], accZ: [], gyrX: [], gyrY: [], gyrZ: []);
-
-  // Stream<double> countStream(int max) async* {
-  //   var rng = Random();
-  //   Timer(const Duration(seconds: 5), () async* {
-  //     yield rng.nextDouble();
-  //   });
-  //   // for (int i = 0; i < max; i++) {
-  //   //   yield rng.nextDouble();
-  //   // }
-  // }
-
-  // Future startRandomStream() async {
-  //   var streama = countStream(5).listen((event) {
-  //     // print(event);
-  //   });
-  //   Timer(const Duration(seconds: 5), () {
-  //     // print("Stop");
-  //     streama.cancel();
-  //   });
-  // }
 
   Future startMovement(bool sim) async {
     await showDialog(
@@ -51,7 +28,6 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (BuildContext context) {
           movementNumber = null;
           return AlertDialog(
-              // backgroundColor: Colors.lightBlueAccent,
               scrollable: true,
               title: const Text("Select movement"),
               content: SizedBox(
@@ -116,21 +92,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   "Record Movement",
                   style: TextStyle(fontSize: 22),
                 )),
-            // TextButton(
-            //     onPressed: startRandomStream,
-            //     child: const Text("Start Random Number Stream")),
-            // TextButton(
-            //     onPressed: () {
-            //       if (modelData.accX.isNotEmpty) {
-            //         Navigator.push(
-            //             context,
-            //             MaterialPageRoute(
-            //                 builder: (context) => SensorChartScaffold(
-            //                       modelData: modelData,
-            //                     )));
-            //       }
-            //     },
-            //     child: const Text("Chart"))
           ],
         ),
       ),
