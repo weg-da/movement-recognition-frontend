@@ -40,7 +40,7 @@ class _MovementScaffoldState extends State<PageMovement> {
   Future countdown({required int seconds}) async {
     int counterLocal = seconds;
     _counter = seconds;
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    Timer timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _counter--;
         counterLocal--;
